@@ -1,16 +1,30 @@
-<nav class="flex flex-center justify-between flex-wrap bg-sky-600 p-2 px-6">
-    <div class="flex flex-wrap items-center lg:w-auto">
-        <div class="flex items-center flex-shrink-0 text-white mr-6 mt-2 mb-2">
+<style lang="postcss">
+    nav {
+        max-height: 20%;
+    }
+    .nav-entry {
+        @apply text-sky-200 hover:text-white;
+    }
+</style>
+
+<nav class="flex justify-between flex-wrap bg-sky-600 p-4 px-6">
+    <div class="flex flex-wrap items-center gap-8">
+        <div class="flex items-center text-white">
             <svg class="fill-current h-8 w-8 mr-2" width="54" height="54" viewBox="0 0 54 54" xmlns="http://www.w3.org/2000/svg"><path d="M13.5 22.1c1.8-7.2 6.3-10.8 13.5-10.8 10.8 0 12.15 8.1 17.55 9.45 3.6.9 6.75-.45 9.45-4.05-1.8 7.2-6.3 10.8-13.5 10.8-10.8 0-12.15-8.1-17.55-9.45-3.6-.9-6.75.45-9.45 4.05zM0 38.3c1.8-7.2 6.3-10.8 13.5-10.8 10.8 0 12.15 8.1 17.55 9.45 3.6.9 6.75-.45 9.45-4.05-1.8 7.2-6.3 10.8-13.5 10.8-10.8 0-12.15-8.1-17.55-9.45-3.6-.9-6.75.45-9.45 4.05z"/></svg>
-            <span class="font-semibold text-xl tracking-tight">
+            <span class="font-semibold text-xl">
                 <a href="/">GITvai</a>
             </span>
         </div>
-        <div class="flex items-center lg:w-auto">
-                <a href="/page" class="lg:mt-0 text-sky-200 hover:text-white mr-4">
-                    Page1
-                </a>
+        <div class="flex flex-wrap gap-3">
+            <a href="/page" class="nav-entry">
+                Page1
+            </a>
+            <a href="/page2" class="nav-entry">
+                Page2
+            </a>
         </div>
     </div>
-    <a href="/" class="mt-2 mb-2 px-4 py-2 font-medium text-white hover:text-sky-100">User1</a>
+    <div class="flex items-center">
+        <a href="/" class="font-medium text-white hover:text-sky-100">User1</a>
+    </div>
 </nav>
