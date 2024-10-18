@@ -1,14 +1,11 @@
-<style>
-	.con {
-			margin-top: 20vh;
-	}
+<style lang="postcss">
+
 </style>
 
 <base href="/" />
-<div class="con flex justify-center items-start h-full">
 <div class="w-full max-w-3xl flex flex-col justify-center items-left m-5 gap-2">
 	<div class="flex items-center">
-		<div class="my-4 text-3xl text-gray-500"><a href="/">user/</a></div>
+		<div class="my-4 text-3xl text-gray-500"><a href="/repositories">User1/</a></div>
 		<div class="text-3xl">
 			 repo
 		</div>
@@ -33,7 +30,7 @@
 			</button>
 		</div>
 		<div class="flex-grow ml-4 text-sm text-gray-500 hover:text-gray-600">
-			<a href="/"> commit </a>
+			<a href="/">latest commit message</a>
 		</div>
 		<div class="flex gap-2">
 			<button class="border border-gray-600 flex items-center text-gray-700 bg-transparent hover:bg-slate-400 rounded-lg py-2 px-3 text-sm" type="button">
@@ -92,5 +89,4 @@
 			</tbody>
 		</table>
 	</div>
-</div>
 </div>
