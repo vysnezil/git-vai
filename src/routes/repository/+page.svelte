@@ -1,9 +1,13 @@
 <style lang="postcss">
-
+    @media screen and (max-width: 600px) {
+        .s-hide {
+            display: none;
+        }
+    }
 </style>
 
 <base href="/" />
-<div class="w-full max-w-3xl flex flex-col justify-center items-left m-5 gap-2">
+<div class="w-full max-w-3xl flex flex-col justify-center items-left my-5 gap-2">
 	<div class="flex items-center">
 		<div class="my-4 text-3xl text-gray-500"><a href="/repositories">User1/</a></div>
 		<div class="text-3xl">
@@ -19,15 +23,15 @@
 
 	<div class="flex justify-between items-center w-full">
 		<div>
-			<button class="text-white bg-sky-600 hover:bg-sky-800 focus:ring-2 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center" type="button">
-				<svg class="w-4 h-4 me-2" xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 448 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+			<a href="/" class="btn gap-2">
+				<svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 448 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
 					<path d="M80 104a24 24 0 1 0 0-48 24 24 0 1 0 0 48zm80-24c0 32.8-19.7 61-48 73.3v87.8c18.8-10.9 40.7-17.1 64-17.1h96c35.3 0 64-28.7 64-64v-6.7C307.7 141 288 112.8 288 80c0-44.2 35.8-80 80-80s80 35.8 80 80c0 32.8-19.7 61-48 73.3V160c0 70.7-57.3 128-128 128H176c-35.3 0-64 28.7-64 64v6.7c28.3 12.3 48 40.5 48 73.3c0 44.2-35.8 80-80 80s-80-35.8-80-80c0-32.8 19.7-61 48-73.3V352 153.3C19.7 141 0 112.8 0 80C0 35.8 35.8 0 80 0s80 35.8 80 80zm232 0a24 24 0 1 0 -48 0 24 24 0 1 0 48 0zM80 456a24 24 0 1 0 0-48 24 24 0 1 0 0 48z"></path>
 				</svg>
-				 master
-				<svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+				<div class="s-hide">master</div>
+				<svg class="w-2.5 h-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
 					<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"></path>
 				</svg>
-			</button>
+			</a>
 		</div>
 		<div class="flex-grow ml-4 text-sm text-gray-500 hover:text-gray-600">
 			<a href="/">latest commit message</a>
@@ -39,15 +43,15 @@
 					<path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"></path>
 				</svg>
 			</button>
-			<button class="btn" type="button">
-				<svg class="w-5 h-5 me-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+			<a class="btn gap-2" href="/">
+				<svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
 					<path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3"></path>
 				</svg>
-				Download
-				<svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+				<div class="s-hide">Download</div>
+				<svg class="w-2.5 h-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
 					<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"></path>
 				</svg>
-			</button>
+			</a>
 		</div>
 	</div>
 

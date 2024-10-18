@@ -10,7 +10,7 @@
 </style>
 
 <Navbar />
-<div class="con flex justify-center items-start h-full">
+<div class="con flex justify-center items-start h-full px-2">
 	<slot />
 </div>
 

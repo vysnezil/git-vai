@@ -8,5 +8,5 @@
 }
 
 .btn {
-    @apply text-white bg-sky-600 hover:bg-sky-800 focus:ring-2 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center
+    @apply h-10 text-white bg-sky-600 hover:bg-sky-800 focus:ring-2 focus:outline-none font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center
 }
