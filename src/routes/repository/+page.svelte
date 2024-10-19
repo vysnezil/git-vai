@@ -1,5 +1,5 @@
 <style lang="postcss">
-    @media screen and (max-width: 600px) {
+    @media screen and (max-width: 576px) {
         .s-hide {
             display: none;
         }
@@ -7,9 +7,9 @@
 </style>
 
 <base href="/" />
-<div class="w-full max-w-3xl flex flex-col justify-center items-left my-5 gap-2">
-	<div class="flex items-center">
-		<div class="my-4 text-3xl text-gray-500"><a href="/repositories">User1/</a></div>
+<div class="w-full max-w-3xl flex flex-col justify-center items-left gap-2">
+	<div class="flex items-center mb-3">
+		<div class="text-3xl text-gray-500"><a href="/repositories">User1/</a></div>
 		<div class="text-3xl">
 			 repo
 		</div>

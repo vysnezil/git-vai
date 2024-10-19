@@ -1,4 +1,4 @@
-<div class="max-h-max w-full max-w-xl flex flex-col justify-center items-left bg-white divide-y divide-gray-100 rounded-lg shadow p-1">
+<div class="max-h-max w-full max-w-3xl flex flex-col justify-center items-left bg-white divide-y divide-gray-100 rounded-lg shadow p-1">
 	<div class="flex justify-between items-center flex-wrap">
 		<div class="my-4 text-3xl text-gray-500 mx-4 flex items-center">
 			Public repositories
