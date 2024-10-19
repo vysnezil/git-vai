@@ -1,32 +1,52 @@
+<script>
+    import { FontAwesomeIcon } from '@fortawesome/svelte-fontawesome'
+    import { faPlus } from '@fortawesome/free-solid-svg-icons'
+    import { faFolder } from '@fortawesome/free-regular-svg-icons'
+</script>
+
+<style lang="postcss">
+    .add-btn {
+        @apply bg-emerald-500 hover:bg-emerald-700;
+        @apply gap-2;
+    }
+</style>
+
 <div class="max-h-max w-full max-w-3xl flex flex-col justify-center items-left bg-white divide-y divide-gray-100 rounded-lg shadow p-1">
-	<div class="flex justify-between items-center flex-wrap">
-		<div class="my-4 text-3xl text-gray-500 mx-4 flex items-center">
-			Public repositories
-		</div>
-		<a href="/create" class="shadow mx-4 flex items-center bg-emerald-500 text-white hover:bg-emerald-700 rounded-lg pl-4 pr-5 py-2.5 text-sm font-medium">
-			<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-1">
-				<path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"></path>
-			</svg>
-			<div>
-				New repository
-			</div>
-		</a>
-	</div>
-	<ul class="py-2 text-sm text-gray-700">
-		<li class="border-b hover:bg-gray-100 py-1 text-base">
-			<a href="/repository" class="flex justify-between flex-center mx-3 py-3">
-        <div class="flex flex-center items-center mx-3">
-					<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-						<path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12.75V12A2.25 2.25 0 0 1 4.5 9.75h15A2.25 2.25 0 0 1 21.75 12v.75m-8.69-6.44-2.12-2.12a1.5 1.5 0 0 0-1.061-.44H4.5A2.25 2.25 0 0 0 2.25 6v12a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9a2.25 2.25 0 0 0-2.25-2.25h-5.379a1.5 1.5 0 0 1-1.06-.44Z"></path>
-					</svg>
-					<div class="ml-1 text-gray-500">User1/</div>
-					<div class="font-medium">repo</div>
-				</div>
-				<div class="mx-3 text-gray-500">
-					repo desc
-				</div>
-				<div class="mx-3 text-gray-500">4.2.2018 14:04</div>
-			</a>
-		</li>
-	</ul>
+    <div class="flex justify-between items-center flex-wrap px-4">
+        <div class="my-4 text-3xl text-gray-500 flex items-center">
+            Public repositories
+        </div>
+        <a href="/create" class="btn add-btn">
+            <FontAwesomeIcon icon={faPlus} />
+            <div class="s-hide">New repository</div>
+        </a>
+    </div>
+    <ul class="pb-2 text-sm text-gray-700">
+        <li class="border-b hover:bg-gray-100 text-base px-4">
+            <a href="/repository" class="flex justify-between flex-center py-3 gap-3">
+                <div class="flex flex-center items-center gap-2">
+                    <FontAwesomeIcon icon={faFolder} size="lg" />
+                    <div class="flex">
+                        <div class="text-gray-500">User1/</div>
+                        <div class="font-medium">repo</div>
+                    </div>
+                </div>
+                <div class="text-gray-500">repo desc</div>
+                <div class="text-gray-500">4.2.2018 14:04</div>
+            </a>
+        </li>
+        <li class="border-b hover:bg-gray-100 text-base px-4">
+            <a href="/repository" class="flex justify-between flex-center py-3 gap-3">
+                <div class="flex flex-center items-center gap-2">
+                    <FontAwesomeIcon icon={faFolder} size="lg" />
+                    <div class="flex">
+                        <div class="text-gray-500">User1/</div>
+                        <div class="font-medium">another-repo</div>
+                    </div>
+                </div>
+                <div class="text-gray-500">another repo desc</div>
+                <div class="text-gray-500">2.2.2021 04:04</div>
+            </a>
+        </li>
+    </ul>
 </div>

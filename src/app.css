@@ -2,11 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
-.button {
-    @apply bg-sky-600 hover:bg-sky-800 text-white hover:text-gray-300;
-    @apply px-4 py-2 text-sm leading-none border rounded cursor-pointer select-none;
-}
-
 .btn {
     @apply h-10 text-white bg-sky-600 hover:bg-sky-800 focus:ring-2 focus:outline-none font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center
+}
+
+@media screen and (max-width: 576px) {
+    .s-hide {
+        display: none;
+    }
 }
