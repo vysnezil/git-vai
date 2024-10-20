@@ -4,14 +4,7 @@
     import { faFolder } from '@fortawesome/free-regular-svg-icons'
 </script>
 
-<style lang="postcss">
-    .add-btn {
-        @apply bg-emerald-500 hover:bg-emerald-700;
-        @apply gap-2;
-    }
-</style>
-
-<div class="max-h-max w-full max-w-3xl flex flex-col justify-center items-left bg-white divide-y divide-gray-100 rounded-lg shadow p-1">
+<div class="con">
     <div class="flex justify-between items-center flex-wrap px-4">
         <div class="my-4 text-3xl text-gray-500 flex items-center">
             Public repositories
@@ -50,3 +43,21 @@
         </li>
     </ul>
 </div>
+
+<style lang="postcss">
+    .add-btn {
+        @apply bg-emerald-500 hover:bg-emerald-700;
+        @apply gap-2;
+    }
+
+    .con {
+        @apply bg-white divide-y divide-gray-100 rounded-lg shadow p-1;
+        max-height: max-content;
+        width: 100%;
+        max-width: 48rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 1rem;
+    }
+</style>

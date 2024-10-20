@@ -1,5 +1,5 @@
 <div class="w-full max-w-xs">
-    <form method="post" class="bg-white shadow-md rounded px-8 py-6 mb-4">
+    <form method="post" class="bg-white shadow-md rounded-lg px-8 py-6 mb-4">
         <div class="mb-4 text-gray-700 text-2xl font-bold">
             Login
         </div>
@@ -22,5 +22,5 @@
 </div>
 
 <style lang="postcss">
-    
+
 </style>

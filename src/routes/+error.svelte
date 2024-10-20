@@ -7,6 +7,6 @@
         {$page.status}
     </div>
     <div class="text-3xl  text-gray-500">
-        {$page.error.message}
+        {$page.error?.message}
     </div>
 </div>
