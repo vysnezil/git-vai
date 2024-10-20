@@ -1,13 +1,12 @@
-<script>
+<script lang="ts">
 	import { FontAwesomeIcon } from '@fortawesome/svelte-fontawesome'
 	import { faEgg } from '@fortawesome/free-solid-svg-icons'
-</script>
 
-<style lang="postcss">
-    .nav-entry {
-        @apply text-sky-200 hover:text-white;
+    let login: boolean = false;
+    const click = () => {
+			login = true;
     }
-</style>
+</script>
 
 <nav class="flex justify-between bg-sky-600 p-4 px-6">
     <div class="flex flex-wrap items-center gap-8">
@@ -24,6 +23,33 @@
         </div>
     </div>
     <div class="flex items-center">
-        <a href="/" class="font-medium text-white hover:text-sky-100">User1</a>
+        {#if login}
+            <div class="flex gap-3 flex-wrap">
+                <a class="btn" href="/login">
+                    Login
+                </a>
+                <a class="btn" href="/register">
+                    Register
+                </a>
+            </div>
+        {:else}
+            <button on:click={click} class="font-medium text-white hover:text-sky-100">User1</button>
+        {/if}
+
     </div>
 </nav>
+
+<style lang="postcss">
+    .nav-entry {
+        @apply text-sky-200 hover:text-white;
+    }
+    .btn {
+        padding-top: 0;
+        padding-bottom: 0;
+        border: solid 1px whitesmoke;
+        height: 2rem;
+        flex-grow:1;
+        max-width: 5.5rem;
+        justify-content: center;
+    }
+</style>
