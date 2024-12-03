@@ -72,3 +72,11 @@ export const verifyToken = async (token: string) => {
 		return false;
 	}
 };
+
+export const invalidateToken = async (token: string) => {
+	await Token.destroy({
+		where: {
+			value: token
+		}
+	})
+}

@@ -4,29 +4,25 @@ import { User } from '$lib/models/User';
 import bcrypt from "bcrypt";
 import { createTokens } from '$lib/server/auth';
 
-export const load = ({ cookies }) => {
-	if (cookies.get("token") !== undefined) redirect(302, '/');
-}
-
 export const actions = {
 	default: async ({ request, cookies }) => {
 		const data = await request.formData();
 
-		const username = data.get('username');
-		const password = data.get('password');
-		const repeat = data.get('repeat');
+		const username = data.get('username')?.toString()?.trim();
+		const password = data.get('password')?.toString()?.trim();
+		const repeat = data.get('repeat')?.toString()?.trim();
 
-		if (username === null || username === "") return fail(401, {
+		if (username === undefined || username === "") return fail(401, {
 			error: "Username field cannot be empty",
 			username: ""
 		});
 
-		if (password === null || password === "") return fail(401, {
+		if (password === undefined || password === "") return fail(401, {
 			error: "Password field cannot be empty",
 			username: username
 		});
 
-		if (repeat === null || repeat === "") return fail(401, {
+		if (repeat === undefined || repeat === "") return fail(401, {
 			error: "Repeat field cannot be empty",
 			username: username
 		});
@@ -37,7 +33,7 @@ export const actions = {
 		});
 
 		const foundUser = await User.findOne({
-			where: { username: username.toString() }
+			where: { username: username }
 		});
 
 		if (foundUser != null) return fail(401, {
@@ -45,7 +41,7 @@ export const actions = {
 			username: username
 		});
 
-		const hash = await bcrypt.hash(password.toString(), 10);
+		const hash = await bcrypt.hash(password, 10);
 		const newUser = await User.create({ username: username, password: hash });
 
 		const {access, refresh} = await createTokens(newUser);
