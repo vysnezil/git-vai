@@ -1,12 +1,11 @@
 <script lang="ts">
-	import type { PageData } from './$types';
-	export let data: PageData;
+	let { data } = $props();
 </script>
 
 <div class="flex justify-between items-center flex-col">
-    {#if data.username.toLowerCase() === "user1"}
+    {#if data.username?.toLowerCase() === data.owner.toLowerCase()}
         <div>my repos</div>
     {:else}
-        <div>{data.username} repos</div>
+        <div>{data.owner} repos</div>
     {/if}
 </div>

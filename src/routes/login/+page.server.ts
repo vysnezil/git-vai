@@ -8,21 +8,21 @@ export const actions = {
 	default: async ({ request, cookies }) => {
 		const data = await request.formData();
 
-		const username = data.get('username');
-		const password = data.get('password');
+		const username = data.get('username')?.toString().trim();
+		const password = data.get('password')?.toString().trim();
 
-		if (username === null || username === "") return fail(401, {
+		if (username === undefined || username === "") return fail(401, {
 			error: "Username field cannot be empty",
 			username: ""
 		});
 
-		if (password === null || password === "") return fail(401, {
+		if (password === undefined || password === "") return fail(401, {
 			error: "Password field cannot be empty",
 			username: username
 		});
 
 		const foundUser = await User.findOne({
-			where: { username: username.toString() }
+			where: { username: username }
 		});
 
 		if (foundUser == null) return fail(401, {
@@ -30,7 +30,7 @@ export const actions = {
 			username: username
 		});
 
-		if (!await bcrypt.compare(password.toString(), foundUser.password)) return fail(401, {
+		if (!await bcrypt.compare(password, foundUser.password)) return fail(401, {
 			error: "Incorrect username or password",
 			username: username
 		});

@@ -1,7 +1,7 @@
 import { type Handle, redirect } from '@sveltejs/kit';
 import { createTokens, getUser, invalidateToken, verifyToken } from '$lib/server/auth';
 
-const logonRequiredRoutes = [""];
+const logonRequiredRoutes = ["/create"];
 const redirectOnLogged = ["/login", "/register"];
 
 export const handle: Handle = async ({ event, resolve }) => {
@@ -10,23 +10,40 @@ export const handle: Handle = async ({ event, resolve }) => {
 	if (token !== undefined) {
 		if (!await verifyToken(token)) {
 			const refreshT = event.cookies.get("refresh_token");
-			if (refreshT != undefined && !await verifyToken(refreshT)) {
-				const user = await getUser(token);
-				if (user !== null) {
-					const { access, refresh } = await createTokens(user);
+			if (refreshT != undefined) {
+				if (await verifyToken(refreshT)) {
+					const user = await getUser(token);
+					if (user !== null) {
+						const { access, refresh } = await createTokens(user);
 
-					event.cookies.set("access_token", access, { path: '/' });
-					event.cookies.set("refresh_token", refresh, { path: '/' });
+						event.cookies.set("access_token", access, { path: '/' });
+						event.cookies.set("refresh_token", refresh, { path: '/' });
+						await invalidateToken(token);
+						await invalidateToken(refreshT);
+						token = access;
+					}
+				}
+				else {
+					event.cookies.delete("access_token", { path: '/' });
+					event.cookies.delete("refresh_token", { path: '/' });
 					await invalidateToken(token);
 					await invalidateToken(refreshT);
-					token = access;
+					token = undefined;
 				}
 			}
+			else {
+				event.cookies.delete("access_token", { path: '/' });
+				await invalidateToken(token);
+				token = undefined;
+			}
 		}
-		event.locals.user = await getUser(token);
-		if (redirectOnLogged.includes(event.url.pathname)) return redirect(302, "/");
+		if (token !== undefined) {
+			event.locals.user = await getUser(token);
+			if (redirectOnLogged.includes(event.url.pathname)) return redirect(302, "/");
+		}
 	}
-	if (logonRequiredRoutes.includes(event.url.pathname)) return redirect(302, "/login");
+
+	if (token === undefined && logonRequiredRoutes.includes(event.url.pathname)) return redirect(302, "/login");
 
 	return resolve(event);
 };

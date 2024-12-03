@@ -1,3 +1,5 @@
 export const load = async ({ params }) => {
-	return params;
+	return {
+		owner: params.username,
+	};
 }
