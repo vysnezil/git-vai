@@ -1,12 +1,15 @@
 import { fail, redirect } from '@sveltejs/kit';
 import { User } from '$lib/models/User';
 
-export function load({ cookies }) {
+import bcrypt from "bcrypt";
+import { createTokens } from '$lib/server/auth.ts';
+
+export const load = ({ cookies }) => {
 	if (cookies.get("token") !== undefined) redirect(302, '/');
 }
 
 export const actions = {
-	default: async ({ request }) => {
+	default: async ({ request, cookies }) => {
 		const data = await request.formData();
 
 		const username = data.get('username');
@@ -29,13 +32,21 @@ export const actions = {
 			error: "Passwords must match"
 		});
 
-		const user = await User.findOne({
-			where: { username: username }
+		const foundUser = await User.findOne({
+			where: { username: username.toString() }
 		});
 
-		if (user != null) return fail(401, {
+		if (foundUser != null) return fail(401, {
 			error: "User with this name already exists"
 		});
+
+		const hash = await bcrypt.hash(password.toString(), 10);
+		const newUser = await User.create({ username: username, password: hash });
+
+		const {access, refresh} = await createTokens(newUser);
+
+		cookies.set("access_token", access, { path: '/' });
+		cookies.set("refresh_token", refresh, { path: '/' });
 
 		return redirect(302, '/');
 	}

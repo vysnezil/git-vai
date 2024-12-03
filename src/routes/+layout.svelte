@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import '../app.css';
 	import Navbar from '../navbar.svelte';
 
@@ -6,9 +6,12 @@
 	import '@fortawesome/fontawesome-svg-core/styles.css';
 
 	config.autoAddCss = false;
+
+  import type { PageData } from './$types';
+  const { data }: { data: PageData } = $props();
 </script>
 
-<Navbar />
+<Navbar username={data.username} />
 <div class="con flex justify-center items-start h-full px-2 pt-8">
     <slot />
 </div>

@@ -5,6 +5,7 @@ const sequelize = new Sequelize("sqlite:database/gitvai.db", {
 		timestamps: false,
 	},
 	logging: false,
+	omitNull: true
 });
 
 export { sequelize };

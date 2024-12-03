@@ -6,18 +6,19 @@ module.exports = {
    * @returns {Promise<any>}
    */
   async up (queryInterface, Sequelize) {
-     await queryInterface.createTable('users', {
-       id: {
-         type: Sequelize.INTEGER,
-         autoIncrement: true,
-         primaryKey: true,
-       },
-       username: {
-         type: Sequelize.STRING,
-         unique: true,
-       },
-       password: Sequelize.STRING,
-     });
+    await queryInterface.createTable('tokens', {
+      id: {
+        type: Sequelize.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+      },
+      value: Sequelize.STRING,
+      type: Sequelize.ENUM('access', 'refresh'),
+      userId: {
+        type: Sequelize.INTEGER,
+        references: { model: 'users', key: 'id' }
+      }
+    });
   },
 
   /**
@@ -26,6 +27,6 @@ module.exports = {
    * @returns {Promise<any>}
    */
   async down (queryInterface, Sequelize) {
-     await queryInterface.dropTable('users');
+    await queryInterface.dropTable('tokens');
   }
 };

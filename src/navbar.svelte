@@ -2,10 +2,7 @@
 	import { FontAwesomeIcon } from '@fortawesome/svelte-fontawesome'
 	import { faEgg } from '@fortawesome/free-solid-svg-icons'
 
-    let login: boolean = false;
-    const click = () => {
-			login = true;
-    }
+  const { username } = $props();
 </script>
 
 <nav class="flex justify-between bg-sky-600 p-4 px-6">
@@ -23,7 +20,7 @@
         </div>
     </div>
     <div class="flex items-center">
-        {#if login}
+        {#if !username}
             <div class="flex gap-3 flex-wrap">
                 <a class="btn" href="/login">
                     Login
@@ -33,7 +30,7 @@
                 </a>
             </div>
         {:else}
-            <button on:click={click} class="font-medium text-white hover:text-sky-100">User1</button>
+            <a href="logout" class="font-medium text-white hover:text-sky-100">{username}</a>
         {/if}
 
     </div>

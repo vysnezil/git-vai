@@ -1,5 +1,5 @@
 <script lang="ts">
-    let { form } = $props();
+    const { form } = $props();
 </script>
 
 <div class="w-full max-w-xs">
