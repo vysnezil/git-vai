@@ -1,8 +1,7 @@
-import { getUser } from '$lib/server/auth.ts';
+import { getUser } from '$lib/server/auth';
 
-
-export const load = async ({request, cookies}) => {
+export const load = async ({cookies}) => {
 	return {
-		username: (await getUser(cookies.get("access_token") ?? ""))?.username
+		username: (await (getUser(cookies.get("access_token") ?? "")))?.username,
 	}
 }

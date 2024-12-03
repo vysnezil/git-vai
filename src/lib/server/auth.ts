@@ -1,8 +1,8 @@
 import { JWT_SECRET } from '$env/static/private';
-import { User } from '$lib/models/User.ts';
-import { SignJWT } from 'jose';
-import { Token } from '$lib/models/Token.ts';
-import { sequelize } from '$lib/server/db.ts';
+import { User } from '$lib/models/User';
+import { jwtVerify, SignJWT } from 'jose';
+import { Token } from '$lib/models/Token';
+import { sequelize } from '$lib/server/db';
 
 const key = new TextEncoder().encode(JWT_SECRET);
 
@@ -14,7 +14,7 @@ export const createTokens = async (user: User): Promise<{ access: string, refres
 			}
 		)
 		.setProtectedHeader({ alg: 'HS256', typ: 'JWT' })
-		.setExpirationTime(60)
+		.setExpirationTime("1 h")
 		.setIssuedAt(new Date())
 		.sign(key);
 
@@ -25,7 +25,7 @@ export const createTokens = async (user: User): Promise<{ access: string, refres
 		}
 	)
 	.setProtectedHeader({ alg: 'HS256', typ: 'JWT' })
-	.setExpirationTime(10080)
+	.setExpirationTime("1 w")
 	.setIssuedAt(new Date())
 	.sign(key);
 
@@ -58,3 +58,17 @@ export const getUser = async (token: string): Promise<User | null> => {
 	if (!token) return null;
 	return await User.findByPk(tkn?.userId);
 }
+
+export const verifyToken = async (token: string) => {
+	try {
+		await jwtVerify(token, key);
+		const found = await Token.findOne({
+			where: {
+				value: token
+			}
+		})
+		return !!found;
+	} catch {
+		return false;
+	}
+};

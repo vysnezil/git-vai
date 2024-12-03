@@ -1,19 +1,17 @@
 <script lang="ts">
 	import '../app.css';
+  let { children, data } = $props();
 	import Navbar from '../navbar.svelte';
 
 	import { config } from '@fortawesome/fontawesome-svg-core';
 	import '@fortawesome/fontawesome-svg-core/styles.css';
 
 	config.autoAddCss = false;
-
-  import type { PageData } from './$types';
-  const { data }: { data: PageData } = $props();
 </script>
 
 <Navbar username={data.username} />
 <div class="con flex justify-center items-start h-full px-2 pt-8">
-    <slot />
+    {@render children()}
 </div>
 
 <style lang="postcss">

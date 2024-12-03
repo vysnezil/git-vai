@@ -2,7 +2,7 @@
 	import { FontAwesomeIcon } from '@fortawesome/svelte-fontawesome'
 	import { faEgg } from '@fortawesome/free-solid-svg-icons'
 
-  const { username } = $props();
+  let { username } = $props();
 </script>
 
 <nav class="flex justify-between bg-sky-600 p-4 px-6">
@@ -30,7 +30,8 @@
                 </a>
             </div>
         {:else}
-            <a href="logout" class="font-medium text-white hover:text-sky-100">{username}</a>
+            <a href="/logout" class="font-medium text-white hover:text-sky-100"
+            onclick={() => username = ''}>{username}</a>
         {/if}
 
     </div>

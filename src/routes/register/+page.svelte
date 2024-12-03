@@ -11,7 +11,8 @@
             <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
                 Username
             </label>
-            <input class="shadow border rounded w-full py-2 px-3 text-gray-700 focus:outline-none" name="username" id="username" type="text" placeholder="username">
+            <input class="shadow border rounded w-full py-2 px-3 text-gray-700 focus:outline-none"
+                   name="username" id="username" type="text" placeholder="username" value="{form?.username}">
         </div>
         <div class="mb-4 shadow-sm">
             <label class="block text-gray-700 text-sm font-bold mb-2" for="password">
