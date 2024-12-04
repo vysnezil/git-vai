@@ -1,19 +1,18 @@
 import { Repository } from '$lib/models/Repository';
 import { User } from '$lib/models/User';
 import { error } from '@sveltejs/kit';
-import { Op } from 'sequelize';
 
-export const load = async ({ params, locals }) => {
+export const load = async ({ params }) => {
 	const user = await User.findOne({
 		where: {
 			username: params.username
 		}
 	});
 	if (user === null) return error(404, "Not found");
-	const repos = await Repository.findAll({
+	const repo = await Repository.findOne({
 		where: {
-			[Op.or]: [{ private: false }, { private: user.id === locals.user?.id }],
-			owner_id: user.id
+			owner_id: user.id,
+			name: params.repository
 		},
 		include: [
 			{
@@ -24,8 +23,9 @@ export const load = async ({ params, locals }) => {
 		raw: true,
 		nest: true
 	});
+	if (repo === null) return error(404, "Not found");
 	return {
-		repos: repos,
+		repo: repo,
 		user: params.username
 	}
 }
