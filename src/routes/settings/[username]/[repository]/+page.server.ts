@@ -22,7 +22,8 @@ export const load = async ({params, locals}) => {
 		form: {
 			repo_name: repo.name,
 			description: repo.description,
-			private: repo.private
+			private: repo.private ? "yes" : "",
+			error: ""
 		}
 	}
 }

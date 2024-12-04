@@ -8,10 +8,12 @@
 </script>
 
 <RepositoryList title="Public repositories" repos={data.repos} >
+	{#if data.username}
 	<a href="/create" class="btn add-btn">
 		<FontAwesomeIcon icon={faPlus} />
 		<div class="s-hide">New repository</div>
 	</a>
+	{/if}
 </RepositoryList>
 
 <style lang="postcss">

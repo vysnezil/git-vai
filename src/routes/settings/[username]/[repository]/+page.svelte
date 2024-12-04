@@ -5,7 +5,7 @@
 	if (form === null) { form = data.form; }
 	let showWarning = $state(false);
 
-	const toggleW = (e) => {
+	const toggleW = (e: Event) => {
 		showWarning = !showWarning;
 		e.preventDefault();
 	};
@@ -25,7 +25,6 @@
 		</div>
 	</form>
 </div>
-
 {/if}
 <RepositorySettings form={form} title="Edit repository">
 	<div class="flex gap-2 items-center flex-wrap">
@@ -35,12 +34,9 @@
 			{#if form?.error}
 				{form.error}
 			{/if}
-			{#if form?.success}
-				{form.success}
-			{/if}
 		</div>
-		<a href="/{data.username}/{form.repo_name}" class="cursor-pointer shadow-sm rounded-lg border border-gray-300 text-gray-700
-	   bg-sky-50 hover:text-white hover:bg-gray-400 px-5 py-2 text-sm font-medium">Cancel</a>
+		<a href="/{data.username}/{form?.repo_name}" class="cursor-pointer shadow-sm rounded-lg border border-gray-300 text-gray-700
+	   bg-sky-50 hover:text-white hover:bg-gray-400 px-5 py-2 text-sm font-medium">Back</a>
 		<input type="submit" value="Save changes"
 		       class="cursor-pointer shadow-sm rounded-lg border border-gray-300 text-gray-700
        bg-sky-100 hover:text-white hover:bg-sky-500 px-5 py-2 text-sm font-medium">

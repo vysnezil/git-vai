@@ -8,7 +8,7 @@
 
 <div class="w-full max-w-3xl flex flex-col justify-center gap-2">
 	<div class="flex items-center mt-4 mb-2">
-		<div class="text-3xl text-gray-500"><a href="/repositories/{data.username}">{data.username}/</a></div>
+		<div class="text-3xl text-gray-500"><a href="/repositories/{data.repo.owner.username}">{data.repo.owner.username}/</a></div>
 		<div class="text-3xl mr-3">{data.repo.name}</div>
 		{#if data.repo.private}
 			<FontAwesomeIcon icon={faLock} size="2xl" class="w-5 h-5 text-slate-700"/>
@@ -28,9 +28,11 @@
 			<a href="javascript:void(0);">latest commit message</a>
 		</div>
 		<div class="flex gap-2">
-			<a href="/settings/{data.username}/{data.repo.name}" class="settings">
+			{#if data.repo.owner.username === data.username}
+			<a href="/settings/{data.repo.owner.username}/{data.repo.name}" class="settings">
 				<FontAwesomeIcon icon={faGear} size="lg" class="text-slate-700"/>
 			</a>
+			{/if}
 			<a class="btn gap-2" href="javascript:void(0);">
 				<FontAwesomeIcon icon={faArrowRightToBracket} size="lg" class="w-5 h-5 rotate-90" />
 				<div class="s-hide">Download</div>

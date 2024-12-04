@@ -9,6 +9,7 @@ export class Repository extends Model {
 	declare owner_id: number;
 	declare created: Date;
 	declare private: boolean;
+	declare owner: User;
 }
 
 Repository.init(
