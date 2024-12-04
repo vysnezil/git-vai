@@ -3,7 +3,7 @@ import { fail, redirect } from '@sveltejs/kit';
 import { Repository } from '$lib/models/Repository';
 
 export const actions = {
-	default: async ({ request, locals }) => {
+	save: async ({ request, locals }) => {
 		const data = await request.formData();
 
 		const name = data.get('repo_name')?.toString().trim();

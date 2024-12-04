@@ -5,7 +5,7 @@ import { User } from '$lib/models/User';
 export class Repository extends Model {
 	declare id: number;
 	declare name: string;
-	declare description: string;
+	declare description?: string;
 	declare owner_id: number;
 	declare created: Date;
 	declare private: boolean;
