@@ -1,11 +1,13 @@
 import { DataTypes, Model } from 'sequelize';
 import { sequelize } from '$lib/server/db';
+import { User } from '$lib/models/User';
 
 export class Repository extends Model {
 	declare id: number;
 	declare name: string;
 	declare description: string;
-	declare owner: number;
+	declare owner_id: number;
+	declare created: Date;
 	declare private: boolean;
 }
 
@@ -23,13 +25,17 @@ Repository.init(
 		description: {
 			type: DataTypes.STRING
 		},
-		owner: {
+		owner_id: {
 			type: DataTypes.NUMBER,
 			allowNull: false,
 			references: {
 				model: 'User',
 				key: 'id'
 			}
+		},
+		created: {
+			type: DataTypes.DATE,
+			allowNull: false
 		},
 		private: {
 			type: DataTypes.BOOLEAN,
@@ -41,3 +47,4 @@ Repository.init(
 		modelName: 'Repository',
 	},
 );
+Repository.belongsTo(User, {foreignKey: 'owner_id', targetKey: 'id', as: 'owner'});

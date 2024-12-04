@@ -5,7 +5,7 @@
 </script>
 
 <div class="w-full max-w-3xl flex flex-col justify-center gap-2">
-    <div class="flex items-center mb-3">
+    <div class="flex items-center mt-4 mb-2">
         <div class="text-3xl text-gray-500"><a href="/repositories">User1/</a></div>
         <div class="text-3xl mr-3">repo</div>
         <FontAwesomeIcon icon={faLock} size="2xl" class="w-5 h-5 text-slate-700"/>

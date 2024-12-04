@@ -19,10 +19,13 @@ module.exports = {
       description: {
         type: Sequelize.STRING
       },
-      owner: {
+      owner_id: {
         type: Sequelize.NUMBER,
         allowNull: false,
         references: { model: 'users', key: 'id' }
+      },
+      created: {
+        type: Sequelize.DATE,
       },
       private: {
         type: Sequelize.BOOLEAN,

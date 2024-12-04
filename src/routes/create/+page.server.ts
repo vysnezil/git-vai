@@ -20,7 +20,7 @@ export const actions = {
 			where: { name: name.toString() }
 		});
 
-		if (foundRepo != null && foundRepo.owner === locals.user!.id ) return fail(409, {
+		if (foundRepo != null && foundRepo.owner_id === locals.user!.id ) return fail(409, {
 			error: "This repository already exists",
 			repo_name: name,
 			private: pr,
@@ -30,8 +30,9 @@ export const actions = {
 		await Repository.create({
 			name: name,
 			description: description,
-			owner: locals.user!.id,
-			private: pr ?? false,
+			owner_id: locals.user!.id,
+			private: pr !== undefined,
+			created: new Date(),
 		})
 
 		return redirect(302, `${locals.user!.username}/${name}`);

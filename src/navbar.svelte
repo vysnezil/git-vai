@@ -15,8 +15,10 @@
         </a>
         <div class="flex flex-wrap gap-4">
             <a href="/repositories" class="nav-entry">Explore</a>
-            <a href="/repositories/{username}" class="nav-entry">My repositories</a>
-            <a href="/repositories/{username}/shared" class="nav-entry">Shared repositories</a>
+            {#if username}
+                <a href="/repositories/{username}" class="nav-entry">My repositories</a>
+                <a href="/repositories/{username}/shared" class="nav-entry">Shared repositories</a>
+            {/if}
         </div>
     </div>
     <div class="flex items-center">
