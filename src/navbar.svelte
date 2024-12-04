@@ -5,7 +5,7 @@
   let { username } = $props();
 </script>
 
-<nav class="flex justify-between bg-sky-600 p-4 px-6">
+<nav class="flex justify-between bg-sky-600 p-4 px-6 flex-wrap gap-5">
     <div class="flex flex-wrap items-center gap-8">
         <a href="/" class="flex items-center text-white gap-2">
             <FontAwesomeIcon icon={faEgg} size="2xl" />
@@ -20,6 +20,9 @@
                 <a href="/repositories/{username}/shared" class="nav-entry">Shared repositories</a>
             {/if}
         </div>
+    </div>
+    <div class="flex grow justify-center">
+        <input class="bg-transparent search" placeholder="Search">
     </div>
     <div class="flex items-center">
         {#if !username}
@@ -44,12 +47,22 @@
         @apply text-sky-200 hover:text-white;
     }
     .btn {
-        padding-top: 0;
-        padding-bottom: 0;
         border: solid 1px whitesmoke;
         height: 2rem;
         flex-grow:1;
         max-width: 5.5rem;
         justify-content: center;
+    }
+    .search {
+        @apply rounded-lg;
+        border: solid 1px #bae6fd;
+        flex-grow:1;
+        justify-content: center;
+        height: 2.5rem;
+        padding: 0 1rem;
+        max-width: 23.5rem;
+    }
+    nav {
+        row-gap: 0.5rem;
     }
 </style>

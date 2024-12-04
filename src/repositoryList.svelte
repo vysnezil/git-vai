@@ -1,9 +1,18 @@
-<script>
+<script lang="ts">
 	import { FontAwesomeIcon } from '@fortawesome/svelte-fontawesome'
 	import { faFolder } from '@fortawesome/free-regular-svg-icons'
 	import { faLock } from '@fortawesome/free-solid-svg-icons';
 
 	const { children, repos, title } = $props();
+	const formatDate = (date: Date) => {
+		date = new Date(date);
+		const dString = date.getDay().toString().padStart(2, "0");
+		const mString = date.getMonth().toString().padStart(2, "0");
+		const yString = date.getFullYear().toString().padStart(4, "0");
+		const hString = date.getHours().toString().padStart(2, "0");
+		const sString = date.getSeconds().toString().padStart(2, "0");
+		return `${dString}.${mString}.${yString} ${hString}:${sString}`;
+	}
 </script>
 
 <div class="con">
@@ -28,7 +37,7 @@
 						</div>
 					</div>
 					<div class="text-gray-500">{repo.description}</div>
-					<div class="text-gray-500">{repo.created}</div>
+					<div class="text-gray-500">{formatDate(repo.created)}</div>
 				</a>
 			</li>
 		{/each}
