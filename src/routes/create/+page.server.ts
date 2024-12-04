@@ -16,6 +16,11 @@ export const actions = {
 			description: description
 		});
 
+		const regexp = new RegExp('^\\S[a-zA-Z-_\\d]+$')
+		if (!regexp.test(name)) return fail(400, {
+			error: "Repository name can only contains letters, numbers, hyphen, underscore"
+		});
+
 		const foundRepo = await Repository.findOne({
 			where: { name: name.toString() }
 		});

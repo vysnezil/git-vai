@@ -13,7 +13,7 @@
 			</label>
 			<div class="flex items-center flex-wrap gap-3">
 				<input class="grow shadow border rounded py-2 px-3 text-gray-700 focus:outline-none" required value={form?.repo_name}
-				       name="repo_name" id="repo_name" type="text" placeholder="repository name">
+				       pattern="\S[a-zA-Z-_\d]+" name="repo_name" id="repo_name" type="text" placeholder="repository name">
 				<div class="flex items-center justify-between gap-1">
 					<label for="private" class="">Private repository</label>
 					<input type="checkbox" id="private" name="private" checked={form?.private}
