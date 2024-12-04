@@ -1,0 +1,9 @@
+services:
+  web:
+    image: "node:lts-alpine"
+    volumes:
+      - ./:/web
+    ports:
+      - "5173:5173"
+    working_dir: /web
+    entrypoint: "npm run start"

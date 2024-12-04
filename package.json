@@ -10,7 +10,8 @@
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
 		"lint": "prettier --check . && eslint .",
 		"format": "prettier --write .",
-		"migrate": "sequelize-cli db:migrate"
+		"migrate": "sequelize-cli db:migrate",
+		"start": "npm i && npm run migrate && npm run dev -- --host"
 	},
 	"devDependencies": {
 		"@eslint/compat": "^1.2.3",
@@ -28,6 +29,7 @@
 		"prettier": "^3.3.2",
 		"prettier-plugin-svelte": "^3.1.2",
 		"prettier-plugin-tailwindcss": "^0.6.5",
+		"sequelize-cli": "^6.6.2",
 		"svelte": "^5.0.0",
 		"svelte-check": "^4.0.0",
 		"tailwindcss": "^3.4.13",
