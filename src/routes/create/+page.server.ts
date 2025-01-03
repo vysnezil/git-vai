@@ -1,6 +1,7 @@
 import { fail, redirect } from '@sveltejs/kit';
 
 import { Repository } from '$lib/models/Repository';
+import { createRepo } from '$lib/server/repository';
 
 export const actions = {
 	save: async ({ request, locals }) => {
@@ -32,13 +33,14 @@ export const actions = {
 			description: description
 		});
 
-		await Repository.create({
-			name: name,
-			description: description,
-			owner_id: locals.user!.id,
-			private: pr !== undefined,
-			created: new Date(),
-		})
+		if (await createRepo(name, locals.user!.id, description ?? "", pr !== undefined) === null) {
+			return fail(500, {
+				error: "Failed to create repository",
+				repo_name: name,
+				private: pr,
+				description: description
+			});
+		}
 
 		return redirect(302, `${locals.user!.username}/${name}`);
 	}

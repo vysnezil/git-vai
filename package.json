@@ -28,6 +28,7 @@
 		"prettier": "^3.3.2",
 		"prettier-plugin-svelte": "^3.1.2",
 		"prettier-plugin-tailwindcss": "^0.6.5",
+		"sequelize-cli": "^6.6.2",
 		"svelte": "^5.0.0",
 		"svelte-check": "^4.0.0",
 		"tailwindcss": "^3.4.13",
@@ -44,6 +45,7 @@
 		"@sequelize/sqlite3": "^7.0.0-alpha.43",
 		"bcrypt": "^5.1.1",
 		"jose": "^5.9.6",
-		"sequelize": "^6.37.5"
+		"sequelize": "^6.37.5",
+		"simple-git": "^3.27.0"
 	}
 }

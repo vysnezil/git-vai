@@ -3,6 +3,7 @@
 	import { faFolder, faFile } from '@fortawesome/free-regular-svg-icons'
 	import { faCodeBranch, faGear, faChevronDown, faLock, faArrowRightToBracket } from '@fortawesome/free-solid-svg-icons'
 
+
 	const { data } = $props();
 </script>
 
@@ -18,11 +19,16 @@
 
 	<div class="flex justify-between items-center w-full gap-4">
 		<div>
-			<a href="javascript:void(0);" class="btn gap-2">
+			<div class="btn gap-2">
 				<FontAwesomeIcon icon={faCodeBranch} size="lg" class="w-5 h-5" />
 				<div class="s-hide">master</div>
 				<FontAwesomeIcon icon={faChevronDown} />
-			</a>
+			</div>
+			<ul class="flex flex-col absolute gap-2">
+				{#each data.branches as branch}
+					<li class="btn">{branch}</li>
+				{/each}
+			</ul>
 		</div>
 		<div class="flex-grow text-sm text-gray-500 hover:text-gray-600">
 			<a href="javascript:void(0);">latest commit message</a>
