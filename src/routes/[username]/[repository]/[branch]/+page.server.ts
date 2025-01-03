@@ -7,10 +7,12 @@ export const load = async ({ params }) => {
 	if (repo === null) return error(404, "Not found");
 	const branches = await getBranches(repo);
 	if (branches.length === 0) {
-		return {
-			repo: repo,
-			user: repo.owner.username,
-		};
+		return redirect(301, `/${params.username}/${params.repository}`);
 	}
-	return redirect(302, `/${params.username}/${params.repository}/${branches[0]}`);
+	if (!branches.includes(params.branch)) error(404, "Branch not found");
+	return {
+		repo: repo,
+		user: params.username,
+		branches: branches,
+	}
 }

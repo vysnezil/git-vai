@@ -9,20 +9,11 @@ export const POST = async ({request, params}) => {
 	const repo = await getRepoByName(repoName, params.username);
 	if (repo === null) return error(404, "Repository not found");
 	if (repo.private) {
-		const auth = request.headers.get("Authorization");
-		if (!auth?.startsWith("Basic ")) return new Response('Unauthorized', {
-			status: 401,
-			headers: { 'WWW-Authenticate': 'Basic'}
-		});
-		const [username, password] = Buffer.from(auth.replace("Basic ", ""), 'base64').toString().split(':');
-		if (!await checkPasswordSimple(username, password)) return new Response('Unauthorized', {
-			status: 401,
-			headers: { 'WWW-Authenticate': 'Basic'}
-		});
-		if (username !== repo.owner.username) return new Response('Unauthorized', {
-			status: 401,
-			headers: { 'WWW-Authenticate': 'Basic'}
-		});
+		const auth = request.headers.get('Authorization');
+		if (!auth?.startsWith('Basic ')) return errRes();
+		const [username, password] = Buffer.from(auth.replace('Basic ', ''), 'base64').toString().split(':');
+		if (!(await checkPasswordSimple(username, password))) return errRes();
+		if (username !== repo.owner.username) return errRes();
 	}
 	const path = `database/git/${repo.owner_id}/${repo.name}.git`;
 	const body = await request.bytes();
@@ -30,3 +21,8 @@ export const POST = async ({request, params}) => {
 		{input: Buffer.from(body)});
 	return new Response(process.stdout, { status: 200, headers: { 'Content-Type': 'x-git-upload-pack-result' } });
 }
+
+const errRes = () => new Response('Unauthorized', {
+	status: 401,
+	headers: { 'WWW-Authenticate': 'Basic' }
+});

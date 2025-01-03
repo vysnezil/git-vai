@@ -1,10 +1,9 @@
-<script>
-	import { FontAwesomeIcon } from '@fortawesome/svelte-fontawesome'
-	import { faFolder, faFile } from '@fortawesome/free-regular-svg-icons'
-	import { faCodeBranch, faGear, faChevronDown, faLock, faArrowRightToBracket } from '@fortawesome/free-solid-svg-icons'
-
+<script lang="ts">
+	import { faGear, faLock } from '@fortawesome/free-solid-svg-icons';
+	import { FontAwesomeIcon } from '@fortawesome/svelte-fontawesome';
 
 	const { data } = $props();
+	import { page } from '$app/state';
 </script>
 
 <div class="w-full max-w-3xl flex flex-col justify-center gap-2">
@@ -15,71 +14,25 @@
 			<FontAwesomeIcon icon={faLock} size="2xl" class="w-5 h-5 text-slate-700"/>
 		{/if}
 		<div class="flex-grow"></div>
-	</div>
-
-	<div class="flex justify-between items-center w-full gap-4">
-		<div>
-			<div class="btn gap-2">
-				<FontAwesomeIcon icon={faCodeBranch} size="lg" class="w-5 h-5" />
-				<div class="s-hide">master</div>
-				<FontAwesomeIcon icon={faChevronDown} />
-			</div>
-			<ul class="flex flex-col absolute gap-2">
-				{#each data.branches as branch}
-					<li class="btn">{branch}</li>
-				{/each}
-			</ul>
-		</div>
-		<div class="flex-grow text-sm text-gray-500 hover:text-gray-600">
-			<a href="javascript:void(0);">latest commit message</a>
-		</div>
-		<div class="flex gap-2">
-			{#if data.repo.owner.username === data.username}
+		{#if data.repo.owner.username === data.username}
 			<a href="/settings/{data.repo.owner.username}/{data.repo.name}" class="settings">
 				<FontAwesomeIcon icon={faGear} size="lg" class="text-slate-700"/>
 			</a>
-			{/if}
-			<a class="btn gap-2" href="javascript:void(0);">
-				<FontAwesomeIcon icon={faArrowRightToBracket} size="lg" class="w-5 h-5 rotate-90" />
-				<div class="s-hide">Download</div>
-				<FontAwesomeIcon icon={faChevronDown} />
-			</a>
-		</div>
+		{/if}
 	</div>
 
-	<div class="rounded-lg shadow bg-slate-50 w-full py-1">
-		<table class="w-full text-gray-600 text-sm table-auto">
-			<tbody>
-			<tr class="border-b h-10 hover:bg-gray-100">
-				<td class="pl-3">
-					<a href="javascript:void(0);" class="flex flex-center items-center gap-1">
-						<FontAwesomeIcon icon={faFolder} size="lg" class="w-5" />
-						<div class="w-200">directory</div>
-					</a>
-				</td>
-				<td class="text-gray-400 hover:text-gray-500">
-					<a href="javascript:void(0);">Add directory</a>
-				</td>
-				<td class="text-gray-400 hover:text-gray-500 text-right pr-3">
-					17.10.2024 15:47
-				</td>
-			</tr>
-			<tr class="border-b h-10 hover:bg-gray-100">
-				<td class="pl-3">
-					<a href="javascript:void(0);" class="flex flex-center items-center gap-1">
-						<FontAwesomeIcon icon={faFile} size="lg" class="w-5" />
-						<div class="w-200">file</div>
-					</a>
-				</td>
-				<td class="text-gray-400 hover:text-gray-500">
-					<a href="javascript:void(0);">Add file</a>
-				</td>
-				<td class="text-gray-400 hover:text-gray-500 text-right pr-3">
-					16.10.2024 14:07
-				</td>
-			</tr>
-			</tbody>
-		</table>
+	<div class="flex items-center justify-center flex-col rounded-lg shadow bg-slate-50 w-full p-1 mt-2 h-60">
+		<div class="text-xl mb-6">
+			This repository is empty
+		</div>
+		<div class="flex">
+			<code id="command" class="px-4 py-2 text-xl border rounded">
+				git clone {page.url}.git
+			</code>
+			<svg class="p-1 w-11 h-11 border cursor-pointer"  xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+				<path stroke-linecap="round" stroke-linejoin="round" d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 0 0 2.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 0 0-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 0 0 .75-.75 2.25 2.25 0 0 0-.1-.664m-5.8 0A2.251 2.251 0 0 1 13.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25ZM6.75 12h.008v.008H6.75V12Zm0 3h.008v.008H6.75V15Zm0 3h.008v.008H6.75V18Z"></path>
+			</svg>
+		</div>
 	</div>
 </div>
 
@@ -88,7 +41,7 @@
         @apply border border-gray-600 text-gray-700 hover:bg-slate-400 rounded-lg text-sm;
         display: flex;
         align-items: center;
-        padding: 0.5rem 0.75rem;
+        padding: 0.75rem;
         background-color: transparent;
     }
 </style>
