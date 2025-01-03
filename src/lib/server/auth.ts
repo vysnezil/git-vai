@@ -3,6 +3,7 @@ import { User } from '$lib/models/User';
 import { jwtVerify, SignJWT } from 'jose';
 import { Token } from '$lib/models/Token';
 import { sequelize } from '$lib/server/db';
+import bcrypt from 'bcrypt';
 
 const key = new TextEncoder().encode(JWT_SECRET);
 
@@ -79,4 +80,10 @@ export const invalidateToken = async (token: string) => {
 			value: token
 		}
 	})
+}
+
+export const checkPasswordSimple = async (username: string, password: string): Promise<boolean> => {
+	const user = await User.findOne({where: {username: username}});
+	if (user === null) return false;
+	return bcrypt.compare(password, user.password);
 }
