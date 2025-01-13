@@ -26,7 +26,7 @@ Jedná sa o veľmi zjednodušenú verziu a tak všetky funkcie git-u niesu podpo
 - bcpypt (https://github.com/kelektiv/node.bcrypt.js)
 
 ### spustenie
-
+vytvorte nový súbor `.env` podľa predlohy `.env-default`
 ```bash
 #manuálne
 npm run start
