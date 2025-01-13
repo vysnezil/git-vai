@@ -1,38 +1,36 @@
-# create-svelte
+# GITvai
+### hosting pre remote git repozitáre (niečo ako github, gitlab...)
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/main/packages/create-svelte).
+Aplikácia s webovým rozraním v ktorom si môžeme vytvárať git repozitáre následne do nich pushovať (cez git) a potom si
+súbory v nich môžeme aj prezerať
 
-## Creating a project
+základné funkcie:
+- vytváranie repozitárov
+- pushovanie do nich
+- možnosť si súbory v prehliadači prezerať
+- podpora viac branchov
+- public / private repozitáre
+- prístupové práva (môžeme niekomu povoliť prístup k nášmu repozitáru)
+- http protokol (nie ssh)
 
-If you're seeing this, you've probably already done this step. Congrats!
+Jedná sa o veľmi zjednodušenú verziu a tak všetky funkcie git-u niesu podporované
 
-```bash
-# create a new project in the current directory
-npm create svelte@latest
+### použité technológie
+- SvelteKit (https://svelte.dev/docs/kit/introduction)
+- FontAwesome (https://fontawesome.com/)
+- Tailwind CSS (https://tailwindcss.com/)
+- Sequelize (https://sequelize.org/)
+- Databáza SQLite (https://www.sqlite.org/)
+- simple-git (https://github.com/steveukx/git-js)
+- jose (https://github.com/panva/jose)
+- bcpypt (https://github.com/kelektiv/node.bcrypt.js)
 
-# create a new project in my-app
-npm create svelte@latest my-app
-```
-
-## Developing
-
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
-```bash
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
-
-## Building
-
-To create a production version of your app:
+### spustenie
 
 ```bash
-npm run build
+#manuálne
+npm run start
+
+#cez docker-compose
+docker compose up
 ```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
