@@ -1,14 +1,25 @@
 <script lang="ts">
 	import { FontAwesomeIcon } from '@fortawesome/svelte-fontawesome'
-	import { faFolder, faFile } from '@fortawesome/free-regular-svg-icons'
+	import { faFolder, faFile, faCopy } from '@fortawesome/free-regular-svg-icons';
 	import { faCodeBranch, faGear, faChevronDown, faLock, faArrowRightToBracket } from '@fortawesome/free-solid-svg-icons'
 
 	const { data } = $props();
+	import { page } from '$app/state';
 
 	let showBranches: boolean = $state(false);
+	let showDownload: boolean = $state(false);
 	const branchFocusOut = (event: FocusEvent) => {
 		showBranches = (event.relatedTarget !== null);
 		if (showBranches) setTimeout(() => showBranches = false, 150);
+	}
+	const cloneFocusOut = (event: FocusEvent) => {
+		showDownload = (event.relatedTarget !== null);
+		if (showBranches) setTimeout(() => showDownload = false, 150);
+	}
+	const copy = async (id: string) => {
+		const el = document.getElementById(id);
+		if (el === undefined || el === null) return;
+		await navigator.clipboard.writeText(el.innerHTML.trim());
 	}
 </script>
 
@@ -50,11 +61,26 @@
 					<FontAwesomeIcon icon={faGear} size="lg" class="text-slate-700"/>
 				</a>
 			{/if}
-			<a class="btn gap-2" href="javascript:void(0);">
-				<FontAwesomeIcon icon={faArrowRightToBracket} size="lg" class="w-5 h-5 rotate-90" />
-				<div class="s-hide">Download</div>
-				<FontAwesomeIcon icon={faChevronDown} />
-			</a>
+			<div>
+				<button class="btn gap-2" onclick={() => showDownload = !showDownload} onblur="{(ev) => cloneFocusOut(ev)}">
+					<FontAwesomeIcon icon={faArrowRightToBracket} size="lg" class="w-5 h-5 rotate-90" />
+					Clone
+					<FontAwesomeIcon icon={faChevronDown} />
+				</button>
+				{#if showDownload}
+					<div class="z-10 bg-white divide-y divide-gray-100 rounded-lg shadow-lg absolute">
+						<div class="flex p-1 flex-nowrap">
+							<code id="command" class="p-2 text-sm border rounded text-center text-ellipsis max-w-52 overflow-hidden whitespace-nowrap">
+								git clone {page.url.protocol}//{page.url.host}/{data.repo.owner.username}/{data.repo.name}.git
+							</code>
+							<button onclick={() => copy("command")} onblur="{(ev) => cloneFocusOut(ev)}">
+								<FontAwesomeIcon icon={faCopy} size="lg" class="hover:bg-gray-100 p-2 h-full border cursor-pointer"/>
+							</button>
+						</div>
+					</div>
+				{/if}
+			</div>
+
 		</div>
 	</div>
 
