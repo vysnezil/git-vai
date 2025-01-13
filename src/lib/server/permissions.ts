@@ -11,7 +11,7 @@ export enum AccessRight {
 
 export const getAccessRights = async (repo: Repository, userArg: User | string | null) => {
 	const user = (typeof userArg === 'string') ? await User.findOne({where: {username: userArg}}) : userArg;
-	if (user === null) return AccessRight.NONE;
+	if (user === null || user === undefined) return AccessRight.NONE;
 
 	if (user.id == repo.owner_id) return AccessRight.OWNER;
 

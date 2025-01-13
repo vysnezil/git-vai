@@ -12,7 +12,6 @@ module.exports = {
         primaryKey: true,
         autoIncrement: true,
       },
-      value: Sequelize.STRING,
       type: Sequelize.ENUM('access', 'refresh'),
       userId: {
         type: Sequelize.INTEGER,

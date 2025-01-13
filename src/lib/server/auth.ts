@@ -8,7 +8,15 @@ import bcrypt from 'bcrypt';
 const key = new TextEncoder().encode(JWT_SECRET);
 
 export const createTokens = async (user: User): Promise<{ access: string, refresh: string }> => {
-		const access = await new SignJWT(
+	let access, refresh;
+	await sequelize.transaction(async t => {
+		const access_db = await Token.create({
+			type: 'access',
+			userId: user.id,
+		},
+			{ transaction: t }
+		);
+		access = await new SignJWT(
 			{
 				"type": "access",
 				"name": user.username,
@@ -17,67 +25,54 @@ export const createTokens = async (user: User): Promise<{ access: string, refres
 		.setProtectedHeader({ alg: 'HS256', typ: 'JWT' })
 		.setExpirationTime("1 h")
 		.setIssuedAt(new Date())
+		.setJti(String(access_db.id))
 		.sign(key);
 
-	const refresh = await new SignJWT(
-		{
-			"type": "access",
-			"name": user.username,
-		}
-	)
-	.setProtectedHeader({ alg: 'HS256', typ: 'JWT' })
-	.setExpirationTime("1 w")
-	.setIssuedAt(new Date())
-	.sign(key);
-
-	await sequelize.transaction(async t => {
-		await Token.create({
-			value: access,
-			type: 'access',
-			userId: user.id,
-		},
-			{ transaction: t }
-		);
-		await Token.create({
-			value: refresh,
+		const refresh_db = await Token.create({
 			type: 'refresh',
 			userId: user.id,
 		},
 			{ transaction: t }
 		);
+		refresh = await new SignJWT(
+			{
+				"type": "access",
+				"name": user.username,
+			}
+		)
+		.setProtectedHeader({ alg: 'HS256', typ: 'JWT' })
+		.setExpirationTime("1 w")
+		.setIssuedAt(new Date())
+		.setJti(String(refresh_db.id))
+		.sign(key);
 	});
-
+	if (access === undefined || refresh === undefined) return Promise.reject();
 	return {access, refresh};
 }
 
 export const getUser = async (token: string): Promise<User | null> => {
-	const tkn = await Token.findOne({
-		where: {
-			value: token
-		}
-	});
 	if (!token) return null;
+	const { payload } = await jwtVerify(token, key);
+	const tkn = await Token.findByPk(payload.jti);
 	return await User.findByPk(tkn?.userId);
 }
 
 export const verifyToken = async (token: string) => {
 	try {
-		await jwtVerify(token, key);
-		const found = await Token.findOne({
-			where: {
-				value: token
-			}
-		})
+		const { payload } = await jwtVerify(token, key);
+		const found = await Token.findByPk(payload.jti);
 		return !!found;
 	} catch {
 		return false;
 	}
 };
 
-export const invalidateToken = async (token: string) => {
+export const invalidateToken = async (token: string | undefined) => {
+	if (token === undefined || token === '') return;
+	const { payload } = await jwtVerify(token, key);
 	await Token.destroy({
 		where: {
-			value: token
+			id: payload.jti
 		}
 	})
 }

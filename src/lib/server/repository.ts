@@ -3,6 +3,7 @@ import { User } from '$lib/models/User';
 import simpleGit from 'simple-git';
 import * as fs from 'node:fs';
 import { sequelize } from '$lib/server/db';
+import { RepositoryAccess } from '$lib/models/RepositoryAccess';
 
 const gitReposDir = 'database/git';
 
@@ -49,3 +50,26 @@ export const createRepo = async (
 	});
 	return repo;
 };
+
+export const getSharedRepos = async (user: User) => {
+	return RepositoryAccess.findAll({
+		where: {
+			user_id: user.id
+		},
+		include: {
+			model: Repository,
+			as: 'repo',
+			include: [
+				{
+					association: 'owner',
+					attributes: ['username']
+				},
+			],
+			required: true,
+		},
+		nest: true,
+		raw: true,
+	}).then(repos => {
+		return repos.map(r => r.repo)
+	});
+}

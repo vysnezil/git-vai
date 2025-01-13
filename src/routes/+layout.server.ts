@@ -1,7 +1,6 @@
-import { getUser } from '$lib/server/auth';
 
-export const load = async ({cookies}) => {
+export const load = async ({locals}) => {
 	return {
-		username: (await (getUser(cookies.get("access_token") ?? "")))?.username,
+		username: locals.user?.username
 	}
 }

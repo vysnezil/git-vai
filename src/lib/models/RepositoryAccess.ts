@@ -9,6 +9,7 @@ export class RepositoryAccess extends Model {
 	declare repo_id: number;
 	declare right: AccessRight;
 	declare user: User;
+	declare repo: Repository;
 }
 
 RepositoryAccess.init(
