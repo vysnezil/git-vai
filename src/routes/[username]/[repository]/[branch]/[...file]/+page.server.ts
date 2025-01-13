@@ -1,12 +1,15 @@
 import { error, redirect } from '@sveltejs/kit';
 import { getRepoByName } from '$lib/server/repository';
 import { getBranches, getFiles, getLatestMessage, getTree, getType, readFile } from '$lib/server/git.js';
+import { AccessRight, getAccessRights } from '$lib/server/permissions';
 
 export const trailingSlash = 'always';
 
-export const load = async ({ params }) => {
+export const load = async ({ params, locals }) => {
 	const repo = await getRepoByName(params.repository, params.username);
 	if (repo === null) return error(404, "Not found");
+	const access = await getAccessRights(repo, locals.user);
+	if (repo.private && access === AccessRight.NONE) return error(404, "Not found");
 	if (params.file.endsWith('/')) params.file = params.file.substring(0, params.file.lastIndexOf('/'));
 	const found_hash = (params.file === '') ? params.branch : await getTree(repo, params.branch,  params.file);
 	if (found_hash !== '') {

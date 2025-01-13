@@ -2,6 +2,7 @@ import { error } from '@sveltejs/kit';
 import { getRepoByName } from '$lib/server/repository';
 import { checkPasswordSimple } from '$lib/server/auth';
 import { spawnSync } from 'node:child_process';
+import { AccessRight, getAccessRights } from '$lib/server/permissions';
 
 export const POST = async ({ request, params }) => {
 	let repoName = params.repository;
@@ -13,7 +14,8 @@ export const POST = async ({ request, params }) => {
 		if (!auth?.startsWith('Basic ')) return errRes();
 		const [username, password] = Buffer.from(auth.replace('Basic ', ''), 'base64').toString().split(':');
 		if (!(await checkPasswordSimple(username, password))) return errRes();
-		if (username !== repo.owner.username) return errRes();
+		const access = await getAccessRights(repo, username);
+		if (access === AccessRight.NONE || access === AccessRight.READ) return errRes();
 	}
 	const path = `database/git/${repo.owner_id}/${repo.name}.git`;
 	const body = await request.bytes();
@@ -26,7 +28,8 @@ export const POST = async ({ request, params }) => {
 	});
 };
 
-const errRes = () => new Response('Unauthorized', {
-	status: 401,
-	headers: { 'WWW-Authenticate': 'Basic' }
-});
+const errRes = () =>
+	new Response('Unauthorized', {
+		status: 401,
+		headers: { 'WWW-Authenticate': 'Basic' }
+	});

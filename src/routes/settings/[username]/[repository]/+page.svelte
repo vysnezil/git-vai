@@ -30,6 +30,8 @@
 	<div class="flex gap-2 items-center flex-wrap">
 		<button onclick={toggleW} class="cursor-pointer shadow-sm rounded-lg border border-gray-300 text-gray-700
 	   bg-red-100 hover:text-white hover:bg-red-400 px-5 py-2 text-sm font-medium">Delete</button>
+		<a href="/settings/{data.username}/{form?.repo_name}/permissions" class="cursor-pointer shadow-sm rounded-lg border border-gray-300 text-gray-700
+	   bg-sky-100 hover:text-white hover:bg-sky-500 px-5 py-2 text-sm font-medium">Permissions</a>
 		<div class="flex-grow text-red-500 text-md italic">
 			{#if form?.error}
 				{form.error}
