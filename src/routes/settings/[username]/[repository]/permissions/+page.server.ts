@@ -18,6 +18,6 @@ export const load = async ({params, locals}) => {
 
 	return {
 		repo: repo,
-		users: getAccessUsers(repo),
+		users: await getAccessUsers(repo),
 	};
 }

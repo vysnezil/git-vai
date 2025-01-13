@@ -1,23 +1,44 @@
 <script lang="ts">
 	import { faLock } from '@fortawesome/free-solid-svg-icons';
 	import { FontAwesomeIcon } from '@fortawesome/svelte-fontawesome';
+	import type { AccessRight } from '$lib/server/permissions';
 
 	const { data } = $props();
 	let userIn = $state("");
 	let error = $state("");
 
+	let users = $state(data.users);
+
 	const add = async (right: string) => {
 		error = "";
-		await fetch(`/api/permissions/${data.repo.owner.username}/${data.repo.name}?action=add&user=${userIn.trim()}&right=${right}`,
-			{ method: "POST"})
-			.then(() => userIn = "").catch(err => { error = err });
+		const user = userIn.trim();
+		if (user === '') return;
+		try {
+			const res = await fetch(`/api/permissions/${data.repo.owner.username}/${data.repo.name}?action=add&user=${user}&right=${right}`,
+				{ method: "POST"});
+			if (res.ok) {
+				userIn = "";
+				users.push({
+					username: user,
+					right: right as AccessRight
+				});
+			} else {
+				error = (await res.json()).message;
+			}
+		} catch (err) {
+			error = "Unknown error";
+		}
+
 	};
 	const revoke = async (user: string) => {
 		error = "";
-		await fetch(`/api/permissions/${data.repo.owner.username}/${data.repo.name}?action=revoke&user=${user}`,
+		fetch(`/api/permissions/${data.repo.owner.username}/${data.repo.name}?action=revoke&user=${user}`,
 			{ method: "POST"})
-			.then(() => user = "").catch(err => { error = err });
+			.then(() => {
+				users = users.filter(m => m.username !== user);
+			}).catch(err => { error = err });
 	};
+
 </script>
 
 <div class="w-full max-w-3xl flex flex-col justify-center items-left">
@@ -50,32 +71,22 @@
 							<th>Revoke</th>
 						</tr>
 
-						{#await data.users}
+						{#if users.length === 0}
 							<tr>
-								<td colspan="3">loading....</td>
+								<td colspan="3">list is empty</td>
 							</tr>
-						{:then users}
-							{#if users.length === 0}
-								<tr>
-									<td colspan="3">list is empty</td>
-								</tr>
-							{/if}
-							{#each users as user}
-							<tr>
-								<td>
-									<a href="/repositories/{user.username}">{user.username}</a>
-								</td>
-								<td>{user.right}</td>
-								<td>
-									<button onclick="{() => revoke(user.username)}" class="underline text-sky">revoke</button>
-								</td>
-							</tr>
-							{/each}
-						{:catch}
-							<tr>
-								<td colspan="3">error loading users</td>
-							</tr>
-						{/await}
+						{/if}
+						{#each users as user}
+						<tr>
+							<td>
+								<a href="/repositories/{user.username}">{user.username}</a>
+							</td>
+							<td>{user.right}</td>
+							<td>
+								<button onclick="{() => revoke(user.username)}" class="underline text-sky">revoke</button>
+							</td>
+						</tr>
+						{/each}
 					</tbody>
 				</table>
 			</div>
@@ -84,7 +95,7 @@
 					Back
 				</a>
 					<div class="text-red-400">
-						{ error.trim() }
+						{ error }
 					</div>
 			</div>
 		</div>

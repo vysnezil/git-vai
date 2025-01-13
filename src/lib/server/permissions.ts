@@ -43,7 +43,6 @@ export const getAccessUsers = async (repo: Repository) => {
 
 	return (access??[]).map(usr => {
 		return {
-			userId: usr.user_id,
 			username: usr.user.username,
 			right: usr.right
 		}
@@ -52,7 +51,7 @@ export const getAccessUsers = async (repo: Repository) => {
 
 export const addAccessRight = async (repo: Repository, user: User, accessRight: AccessRight) => {
 	const access = await getAccessRights(repo, user);
-	if (access !== AccessRight.NONE) return Promise.reject("User already have rights");
+	if (access !== AccessRight.NONE) return Promise.reject("User already has rights");
 	return RepositoryAccess.create({
 		repo_id: repo.id,
 		user_id: user.id,
@@ -62,7 +61,7 @@ export const addAccessRight = async (repo: Repository, user: User, accessRight: 
 
 export const revokeAccessRight = async (repo: Repository, user: User) => {
 	const access = await getAccessRights(repo, user);
-	if (access === null) return Promise.reject("User doesnt have any right");
+	if (access === null) return Promise.reject("User doesn't have any right");
 	return RepositoryAccess.destroy({
 		where: {
 			repo_id: repo.id,

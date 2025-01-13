@@ -1,6 +1,6 @@
 import { JWT_SECRET } from '$env/static/private';
 import { User } from '$lib/models/User';
-import { jwtVerify, SignJWT } from 'jose';
+import { decodeJwt, jwtVerify, SignJWT } from 'jose';
 import { Token } from '$lib/models/Token';
 import { sequelize } from '$lib/server/db';
 import bcrypt from 'bcrypt';
@@ -61,18 +61,18 @@ export const verifyToken = async (token: string) => {
 	try {
 		const { payload } = await jwtVerify(token, key);
 		const found = await Token.findByPk(payload.jti);
-		return !!found;
+		return found?.userId ?? null;
 	} catch {
-		return false;
+		return null;
 	}
 };
 
 export const invalidateToken = async (token: string | undefined) => {
 	if (token === undefined || token === '') return;
-	const { payload } = await jwtVerify(token, key);
+	const { jti } = decodeJwt(token);
 	await Token.destroy({
 		where: {
-			id: payload.jti
+			id: jti
 		}
 	})
 }

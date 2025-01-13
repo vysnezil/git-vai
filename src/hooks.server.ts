@@ -1,5 +1,6 @@
 import { type Handle, redirect } from '@sveltejs/kit';
 import { createTokens, getUser, invalidateToken, verifyToken } from '$lib/server/auth';
+import { User } from '$lib/models/User';
 
 const logonRequiredRoutes = ["/create"];
 const redirectOnLogged = ["/login", "/register"];
@@ -8,11 +9,13 @@ export const handle: Handle = async ({ event, resolve }) => {
 	let token = event.cookies.get("access_token");
 
 	if (token !== undefined) {
-		if (!await verifyToken(token)) {
+		const accessRes = await verifyToken(token);
+		if (accessRes === null) {
 			const refreshT = event.cookies.get("refresh_token");
 			if (refreshT != undefined) {
-				if (await verifyToken(refreshT)) {
-					const user = await getUser(token);
+				const refreshRes = await verifyToken(refreshT);
+				if (refreshRes !== null) {
+					const user = await User.findByPk(refreshRes);
 					if (user !== null) {
 						const { access, refresh } = await createTokens(user);
 
@@ -37,8 +40,8 @@ export const handle: Handle = async ({ event, resolve }) => {
 				token = undefined;
 			}
 		}
-		if (token !== undefined) {
-			event.locals.user = await getUser(token);
+		if (accessRes !== null) {
+			event.locals.user = await User.findByPk(accessRes);
 			if (redirectOnLogged.includes(event.url.pathname)) return redirect(302, "/");
 		}
 	}
